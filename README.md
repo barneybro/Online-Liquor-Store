@@ -1,59 +1,122 @@
-This Flask-based website is a comprehensive platform for users to interact with a liquor store, offering a variety of functionalities depending on their role (customer or vendor). Here are some of the key actions users can perform on this website:
+# 🛒 Flask-Based Liquor Store Website
 
-User Authentication:
+This Flask-based website is a comprehensive platform for users to interact with a liquor store, offering various functionalities depending on their role (**customer** or **vendor**).  
 
-Login: Users can log in using their email and password. The system validates their credentials and redirects them to the appropriate dashboard based on their account type (customer or vendor).
+---
 
-Register: New users can create an account by providing their email, password, first name, last name, and account type (customer or vendor). Passwords are securely hashed before being stored in the database.
+## 🔑 User Authentication
 
-Product Browsing and Purchasing:
+### **Login**
+- Users log in using their email and password.
+- The system validates credentials and redirects them to the appropriate dashboard (**customer** or **vendor**).  
 
-Browse Products: Users can view all available products, including details like name, price, description, and image. Products are categorized (e.g., vodka, whiskey, tequila) for easy navigation.
+### **Register**
+- New users create an account by providing:
+  - Email  
+  - Password  
+  - First name & last name  
+  - Account type (**customer** or **vendor**)  
+- Passwords are securely hashed before storage.  
 
-Add to Cart: Users can add products to their shopping cart and specify the quantity they wish to purchase.
+---
 
-View Cart: Users can see the items in their cart, update quantities, or remove items before proceeding to checkout.
+## 🛍️ Product Browsing & Purchasing
 
-Checkout: Users can complete their purchase, which creates an order in the database and clears their cart.
+### **Browse Products**
+- View all available products, including:  
+  - Name  
+  - Price  
+  - Description  
+  - Image  
+- Products are categorized (e.g., **vodka, whiskey, tequila**) for easy navigation.  
 
-Product Management (Vendors):
+### **Add to Cart**
+- Users can add products to their shopping cart and specify the quantity.  
 
-Add Products: Vendors can add new products to the store by providing details like name, price, description, image, stock, and category.
+### **View Cart**
+- View items in the cart, update quantities, or remove items before checkout.  
 
-Edit Products: Vendors can update product details, such as name, price, description, image, and stock.
+### **Checkout**
+- Complete purchases, creating an order in the database and clearing the cart.  
 
-Delete Products: Vendors can "soft delete" products by marking them as deleted, which removes them from the storefront but keeps them in the database.
+---
 
-Add Discounts: Vendors can apply discounts to products, specifying the discount amount and duration.
+## 🏪 Product Management (Vendors)
 
-Order Management:
+### **Add Products**
+- Vendors add new products by providing:  
+  - Name  
+  - Price  
+  - Description  
+  - Image  
+  - Stock  
+  - Category  
 
-Customer Orders: Customers can view their order history and track the status of their orders.
+### **Edit Products**
+- Vendors update product details (**name, price, description, image, stock**).  
 
-Vendor Orders: Vendors can view all orders placed for their products and update the order status (e.g., pending, shipped, delivered).
+### **Delete Products**
+- Soft delete products (removes them from storefront but keeps them in the database).  
 
-Reviews and Feedback:
+### **Add Discounts**
+- Vendors apply discounts, specifying the amount and duration.  
 
-Submit Reviews: Customers can leave reviews for products they’ve purchased, including a rating and written feedback.
+---
 
-View Reviews: All users can see reviews left by other customers on product pages.
+## 📦 Order Management
 
-Account Management:
+### **Customer Orders**
+- Customers view order history and track order status.  
 
-User Profile: Customers can view and manage their account information.
+### **Vendor Orders**
+- Vendors can:  
+  - View all orders for their products.  
+  - Update order status (**pending, shipped, delivered**).  
 
-Vendor Profile: Vendors can view their account information and manage their listed products.
+---
 
-Admin and Vendor Actions:
+## ⭐ Reviews & Feedback
 
-Update Order Status: Vendors can update the status of orders (e.g., from "pending" to "shipped").
+### **Submit Reviews**
+- Customers leave reviews for purchased products, including:  
+  - A rating  
+  - Written feedback  
 
-Handle Claims: Vendors can manage customer claims or complaints, updating their status as resolved or pending.
+### **View Reviews**
+- All users can see customer reviews on product pages.  
 
-Security and Validation:
+---
 
-Password Hashing: User passwords are securely hashed using SHA-1 before being stored in the database.
+## ⚙️ Account Management
 
-Session Management: The website uses Flask sessions to manage user authentication and store user-specific data (e.g., user ID, email, account type).
+### **User Profile**
+- Customers can view and update their account details.  
 
-This website provides a seamless experience for both customers and vendors, enabling customers to browse, purchase, and review products, while vendors can manage their inventory, orders, and discounts effectively.
+### **Vendor Profile**
+- Vendors can manage their account and listed products.  
+
+---
+
+## 🛠️ Admin & Vendor Actions
+
+### **Update Order Status**
+- Vendors can update order statuses (**pending → shipped → delivered**).  
+
+### **Handle Claims**
+- Vendors can manage customer claims/complaints and update their resolution status.  
+
+---
+
+## 🔐 Security & Validation
+
+### **Password Hashing**
+- User passwords are securely hashed using **SHA-1** before storage.  
+
+### **Session Management**
+- Flask sessions manage user authentication and store user-specific data (**user ID, email, account type**).  
+
+---
+
+This website provides a **seamless experience** for both customers and vendors:  
+✅ **Customers** can browse, purchase, and review products.  
+✅ **Vendors** can manage inventory, orders, and discounts effectively.  
