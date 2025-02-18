@@ -1,0 +1,378 @@
+<html>
+    <head>
+        <title>Single Bottle</title>
+        <link rel="stylesheet" href="/static/styles/ind_products.css">
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+        
+      </style>
+      </head>
+
+    <body>
+      <header class="header">
+        <div class="header-container">
+            <div class="header-left"></div>
+            <div class="header-center">
+                <a href="">Home</a>
+                <a href='/products'>Selection</a>
+                <a href='/acc_check'>Account</a>
+            </div>
+            <div class="header-right">
+                <a href='/cart'><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </header>
+        <article class="second">
+            <div class="row">
+                <img src="/static/images/logo.jpg" class="logo">
+                <div class="cart">
+                  
+                </div>
+    
+                <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Filter</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <a href="{{ url_for('products', category='all') }}">All</a>
+                    <a href="{{ url_for('whiskey') }}">Whiskey</a>
+                    <a href="{{ url_for('tequila') }}">Tequila</a>
+                    <a href="{{ url_for('vodka') }}">Vodka</a>
+                    <a href="{{ url_for('products', availability='instock') }}">In Stock</a>
+                    <a href="{{ url_for('products', availability='outofstock') }}">Out of Stock</a>
+                </div>
+            </div>
+
+
+
+                  <script>
+                    function myFunction() {
+                      document.getElementById("myDropdown").classList.toggle("show");
+                    }
+    
+                    function filterFunction() {
+                      var input, filter, ul, li, a, i;
+                      input = document.getElementById("myInput");
+                      filter = input.value.toUpperCase();
+                      div = document.getElementById("myDropdown");
+                      a = div.getElementsByTagName("a");
+                      for (i = 0; i < a.length; i++) {
+                        txtValue = a[i].textContent || a[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                          a[i].style.display = "";
+                        } else {
+                          a[i].style.display = "none";
+                        }
+                      }
+                    }
+                </script>
+                
+                <div class="layout2">
+                    <a href="{{ url_for('whiskey') }}" class="button">Whiskey</a>
+                    <a href="{{ url_for('tequila') }}" class="button">Tequila</a>
+                    <a href="{{ url_for('vodka') }}" class="button">Vodka</a>
+                </div>
+
+        </article>
+
+
+    </div>
+
+        <div class="product-flexcontainer">
+            <div class="left">
+                <img src="{{ product.image }}" alt="{{ product.prodName }}">
+            </div>
+            <div class="right">
+                <h3 style="padding-top: 30px;">{{ product.prodName }}</h3> <br><br>
+                <h4>{{ product.prodDesc }}</h4> <br><br>
+                {% if product.discAmt %}
+                <h4>Discount: <span style="text-decoration: line-through; color:gray;">${{ product.price | round(2) }}</span> <span style="color: rgb(255, 38, 0);">${{ (product.price - (product.price * product.discAmt)) | round(2) }}</span></h4>
+            {% else %}
+                <h4>Price: ${{ product.price | round(2) }}</h4>
+            {% endif %}
+                <p>(Shipping calculated at checkout)</p> <br>
+                <div class="quantity">
+               <div> <br> <br>
+                    <form id="addToCartForm" method="post">
+                        <input type="hidden" name="productId" value="{{ product.productId }}">
+                        <div>
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" required>
+                        </div> <br><br><br><br>
+                        <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                    </form>
+
+                </div>
+
+                <!--Perchance this is for the entire flexcontainer above functionality (It worky)-->
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const minusBtn = document.querySelector('.minus');
+                        const plusBtn = document.querySelector('.plus');
+                        const quantityInput = document.getElementById('quantityInput');
+                        const addToCartForm = document.getElementById('addToCartForm');
+
+                        minusBtn.addEventListener('click', function() {
+                            let currentValue = parseInt(quantityInput.value);
+                            if (currentValue > 1) {
+                                quantityInput.value = currentValue - 1;
+                            }
+                        });
+
+                        plusBtn.addEventListener('click', function() {
+                            let currentValue = parseInt(quantityInput.value);
+                            quantityInput.value = currentValue + 1;
+                        });
+
+                        addToCartForm.addEventListener('submit', function(event) {
+                            event.preventDefault();
+
+                            const formData = new FormData(addToCartForm);
+                            fetch('/your/add/to/cart/endpoint', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => {
+                                console.log('Item added to cart successfully');
+                            })
+                            .catch(error => {
+                                console.error('Error adding item to cart:', error);
+                            });
+                        });
+                    });
+                </script>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="third">
+    <h2>Customer Reviews</h2>
+    <div class="dropdown">
+        <label for="rating-filter" style="padding-left: 40px;">Filter by Rating:</label>
+        <select id="rating-filter" onchange="filterReviews()">
+            <option value="all">All</option>
+            <option value="5">5 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="2">2 Stars</option>
+            <option value="1">1 Star</option>
+        </select>
+    </div>
+
+
+
+
+                <script>
+                    function filterReviews() {
+                    var selectElement = document.getElementById("rating-filter");
+                    var selectedRating = selectElement.value;
+                    var reviews = document.querySelectorAll(".review");
+
+                    reviews.forEach(function(review) {
+                        var rating = Math.floor(parseFloat(review.dataset.rating)); 
+                        if (selectedRating === 'all') {
+                            review.style.display = 'block'; 
+                        } else if (rating === parseInt(selectedRating)) {
+                            review.style.display = 'block'; 
+                        } else {
+                            review.style.display = 'none'; 
+                        }
+                    });
+                }
+
+
+              </script>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="customer-reviews">
+            {% for review in reviews %}
+                <div class="review" data-rating="{{ review.rating }}">
+                    <h3> {{ review.name }}</h3>
+                    <p>Rating: {{ review.rating }}</p>
+                    <p>Description: {{ review.description }}</p>
+                    <p>Date: {{ review.date }}</p>
+                    {% if review.image %}
+                        <img src="{{ review.image }}" alt="Review Image">
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+<div class="review_section">
+    <div class="container">
+        <h1>Share your opinion!</h1><br>
+        <form id="reviewForm">
+            <input type="hidden" id="userId" value="{{ session['id'] }}">
+            <input type="hidden" id="productId" value="{{ product.productId }}">
+            <p>Enter your name!</p>
+            <input type="text" id="name" name="name"> <br>
+            <p>Choose your rating:</p>
+            <select id="rating" name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <p>Share your review:</p>
+            <textarea id="review" name="review" placeholder="Write your review here"></textarea>
+            <div class="submit-button">
+                <button type="submit" id="submit">Submit</button>
+            </div>
+        </form>
+        <div class="reviews" id="reviews"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+    const reviewForm = document.getElementById('reviewForm');
+
+    reviewForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const userId = document.getElementById('userId').value;
+        const productId = document.getElementById('productId').value;
+        const name = document.getElementById('name').value;
+        const rating = document.getElementById('rating').value;
+        const review = document.getElementById('review').value;
+
+        // Send the review data to the server using fetch
+        fetch(`/submit_review/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId, name: name, rating: rating, review: review })
+        })
+        .then(response => {
+            if (response.ok) {
+                // Handle successful review submission
+                alert('Review submitted successfully!');
+                // You can redirect the user or refresh the reviews section as needed
+            } else {
+                // Handle failed review submission
+                throw new Error('Failed to submit review');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+        </script>
+
+
+
+
+        <footer class="footer">
+          <div class="footer__addr">
+            <h1 class="footer__logo">Hekko</h1>  
+            <address>
+              Thaddeus Stevens College of Technology<br>
+            </address>
+            <li class="nav__item">
+                
+              <ul class="nav__ul">
+                <li>
+                  <a href="#">HOME</a>
+                </li>
+    
+                <li>
+                  <a href="prodcuts.html">SELECTION</a>
+                </li>
+    
+                <li>
+                  <a href="#">ACCOUNT</a>
+                </li>
+              </ul>
+            </li>
+          </div>
+    
+          <ul class="footer__nav">
+            <li class="nav__item">
+              <h2 class="nav__title"></h2>
+    
+              <ul class="nav__ul">
+                <li>
+                  <a href="#"></a>
+                </li>
+    
+                <li>
+                  <a href="prodcuts.html"></a>
+                </li>
+    
+                <li>
+                  <a href="#"></a>
+                </li>
+              </ul>
+            </li>
+    
+            
+    
+            <li class="nav__item">
+              <h2 class="nav__title">Legal</h2>
+    
+              <ul class="nav__ul">
+                <li>
+                  <a  href="#"><b>PROPOSITION 65 
+                    WARNING:</b> Drinking distilled spirits, beer, coolers,
+                    wine and other alcoholic beverages may increase cancer
+                    risk, and, during pregnancy, can cause birth defects.
+                    For more information go to www.P65Warnings.ca.gov/alcohol
+                  </a>
+                </li>
+    
+                <li>
+                  <a style="padding-top: 6vh;" href="#"><b>PRODUCT IMAGE WARNING:</b>
+                    Product images may not always reflect the actual product.
+                    Please relay on product tile and description for actual representation
+                    of product.</a>
+                </li>
+    
+                <li>
+                  <a href="#">Sitemap</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+    
+          <div class="legal">
+            <p> 2024 CSET 180 FInal. All rights reserved.</p>
+    
+            <div class="legal__links">
+              <span>Made by Group D/A</span>
+            </div>
+          </div>
+        </footer>
+          </footer>
+
+       
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
+    </body>
+</html>

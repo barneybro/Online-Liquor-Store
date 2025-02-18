@@ -1,0 +1,224 @@
+<html>
+<head>
+    <title>Whiskey Page</title>
+    <link rel="stylesheet" href="/static/styles/products.css">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+</head>
+<body>
+    <header class="header3">
+        <div class="row">
+          <ul class="nav1">
+            <li><a href="">Home</a></li>
+            <li><a href="/products">Selection</a></li>
+            <li><a href="/acc_check">Account</a></li>
+            <li><a href="/cart"><i class="fas fa-shopping-cart"></i></a></li>
+        </ul>
+        </div>
+
+        <div class="row">
+            <section>
+              <div class="content">
+                <h2>Whiskey</h2>
+                <h2>Whiskey</h2>
+              </div>
+          </section>
+        </div>
+
+    </header>
+
+
+    <article class="second">
+      
+        <div class="row">
+            <img src="/static/images/logo.jpg" class="logo">
+            <div class="cart">
+
+            </div>
+
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Filter</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+                    <a href="{{ url_for('products', category='all') }}">All</a>
+                    <a href="{{ url_for('whiskey') }}">Whiskey</a>
+                    <a href="{{ url_for('tequila') }}">Tequila</a>
+                    <a href="{{ url_for('vodka') }}">Vodka</a>
+                    <a href="{{ url_for('products', size='fifth') }}">Size: Fifth</a>
+                    <a href="{{ url_for('products', size='liter') }}">Size: Liter</a>
+                    <a href="{{ url_for('products', availability='instock') }}">In Stock</a>
+                    <a href="{{ url_for('products', availability='outofstock') }}">Out of Stock</a>
+                </div>
+            </div>
+
+
+
+            <script>
+              function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
+              }
+
+              function filterFunction() {
+                var input, filter, ul, li, a, i;
+                input = document.getElementById("myInput");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("myDropdown");
+                a = div.getElementsByTagName("a");
+                for (i = 0; i < a.length; i++) {
+                  txtValue = a[i].textContent || a[i].innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                  } else {
+                    a[i].style.display = "none";
+                  }
+                }
+              }
+        </script>
+            
+        </div>
+
+        
+
+        <div class="layout3">
+            <input name="nav" type="radio" class="about-radio" id="about" />
+            <div class="page about-page">
+                <div class="page-contents">
+                  <p>
+                    Savor the epitome of refinement with our premium whiskey, crafted for the discerning palate.
+                    Its symphony of flavors, from luscious caramel to subtle spice, is a testament to meticulous
+                    distillation and aging. Indulge in its smooth, luxurious texture that invites you to savor every sip.
+                    Elevate any occasion with the unparalleled depth and complexity of our premium whiskey.</p>
+                </div>
+            </div>
+            <label class="nav" for="about">
+              <span>
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12" y2="17"></line></svg>
+              Whiskey
+                </span>
+              </label>
+          
+            
+          </div>
+
+          
+    </article>
+
+    
+    <div class="products-container">
+      {% for product in products %}
+      <div class="products-item">
+          <img src="{{ product.image }}" alt="image">
+          <h3>{{ product.prodName }}</h3>
+          <p>{{ product.prodDesc }}</p>
+          {% if product.discAmt %}
+          <h3><span style="text-decoration: line-through; color:gray;">${{ product.price | round(2) }}</span> <span style="color: rgb(255, 38, 0);">${{ (product.price - (product.price * product.discAmt)) | round(2) }}</span></h3>
+          {% else %}
+          <h3>${{ product.price | round(2) }}</h3>
+          {% endif %}
+          <button class="btn" onclick="addToCart({{ product.productId }})">
+            <a href="{{ url_for('drinks', productId=product.productId) }}">More Info</a>
+            </button>
+          <!-- Add more product details here -->
+      </div>
+      {% endfor %}
+    </div>
+
+
+    <footer class="footer">
+      <div class="footer__addr">
+        <h1 class="footer__logo">Hekko</h1>  
+        <address>
+          Thaddeus Stevens College of Technology<br>
+        </address>
+        <li class="nav__item">
+            
+          <ul class="nav__ul">
+            <li>
+              <a href="#">HOME</a>
+            </li>
+
+            <li>
+              <a href="products.html">SELECTION</a>
+            </li>
+
+            <li>
+              <a href="#">ACCOUNT</a>
+            </li>
+          </ul>
+        </li>
+      </div>
+
+      <ul class="footer__nav">
+        <li class="nav__item">
+          <h2 class="nav__title"></h2>
+
+          <ul class="nav__ul">
+            <li>
+              <a href="#"></a>
+            </li>
+
+            <li>
+              <a href="products.html"></a>
+            </li>
+
+            <li>
+              <a href="#"></a>
+            </li>
+          </ul>
+        </li>
+
+        
+
+        <li class="nav__item">
+          <h2 class="nav__title">Legal</h2>
+
+          <ul class="nav__ul">
+            <li>
+              <a  href="#"><b>PROPOSITION 65 
+                WARNING:</b> Drinking distilled spirits, beer, coolers,
+                wine and other alcoholic beverages may increase cancer
+                risk, and, during pregnancy, can cause birth defects.
+                For more information go to www.P65Warnings.ca.gov/alcohol
+              </a>
+            </li>
+
+            <li>
+              <a style="padding-top: 6vh;" href="#"><b>PRODUCT IMAGE WARNING:</b>
+                Product images may not always reflect the actual product.
+                Please relay on product tile and description for actual representation
+                of product.</a>
+            </li>
+
+            <li>
+              <a href="#">Sitemap</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+      <div class="legal">
+        <p> 2024 CSET 180 FInal. All rights reserved.</p>
+
+        <div class="legal__links">
+          <span>Made by Group D/A</span>
+        </div>
+      </div>
+    </footer>
+      </footer>
+
+
+
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet'>
+    <title>User Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Merienda, sans-serif;
+        }
+        body, html {
+            scroll-behavior: smooth;
+        }
+        .header {
+            width: 100%;
+            padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-color: rgb(97, 97, 97)
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        .header-center a {
+            margin: 0 20px;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 20px;
+            font-weight: bold;
+            transition: color 0.3s, border-bottom 0.3s;
+            padding-bottom: 5px;
+            position: relative;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
+        }
+        .header-center a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 3px;
+            background: rgb(221, 203, 203);
+            transition: width 0.3s;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+        .header-center a:hover::after {
+            width: 100%;
+        }
+        .header-center a:hover {
+            color: rgb(221, 203, 203);
+        }
+        .header-right {
+            justify-content: flex-end;
+        }
+        .header-right a {
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .header-right a:hover {
+            color: rgb(221, 203, 203);
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .product a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px 0;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .button.edit {background-color: rgb(27, 126, 0);}
+        .button.delete {background-color: rgb(122, 0, 0);}
+        .button.discount {background-color: #007bff;}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="header-left"></div>
+            <div class="header-center">
+                <a href="">Home</a>
+                <a href="/products">Selection</a>
+                <a href="/acc_check">Account</a>
+            </div>
+            <div class="header-right">
+                <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Vendor Account</h1>
+        <h2>Vendor Information</h2>
+        <p><strong>First Name:</strong> {{ users.firstName }}</p>
+        <p><strong>Last Name:</strong> {{ users.lastName }}</p>
+        <p><strong>Email:</strong> {{ users.email }}</p>
+        <h2>Products</h2>
+        {% for product in products %}
+            <div class="product">
+                <p><strong>Product ID:</strong> {{ product.productId }}</p>
+                <p><strong>Name:</strong> {{ product.prodName }}</p>
+                <p><strong>Price:</strong> ${{ product.price }}</p>
+                <p><strong>Stock:</strong> {{ product.stock }}</p>
+                <a href="/product/edit/{{ product.productId }}" class="button edit">Edit</a>
+                <a href="/product/delete/{{ product.productId }}" class="button delete">Delete</a>
+                <a href="/product/add/discount/{{ product.productId }}" class="button discount">Add Discount</a>
+            </div>
+        {% endfor %}
+        <div>
+            <a href="/vendor/claim/" class="button claim">Claims</a>
+            <a href="/vendor_orders/" class="button order">Orders</a>
+            <a href="/create/" class="button create">Create</a>
+        </div>
+    </div>
+</body>
+</html>
